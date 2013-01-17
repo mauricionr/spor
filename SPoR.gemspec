@@ -8,8 +8,8 @@ Gem::Specification.new do |gem|
   gem.version = SPoR::VERSION
   gem.authors = ["mgoldbach"]
   gem.email = ["mgoldbach@agile-is.de"]
-  gem.description = %q{TODO: Write a gem description}
-  gem.summary = %q{TODO: Write a gem summary}
+  gem.description = "SPoR SharePoint on Rails"
+  gem.summary = "SPoR SharePoint on Rails"
   gem.homepage = ""
 
   gem.files = `git ls-files`.split($/)
