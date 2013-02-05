@@ -21,6 +21,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'jwt'
   gem.add_dependency 'rest-client'
   gem.add_dependency 'nokogiri'
+  gem.add_dependency 'httpi'
   gem.add_development_dependency 'rspec'
   gem.add_development_dependency 'rake'
 end

@@ -5,18 +5,21 @@ require_relative "SPoR/sp_search"
 
 module SPoR
   def self.connect_to_web(sp_apptoken, sp_host_url)
-    if sp_apptoken.nil? or sp_host_url
-      raise "parameter is empty"
+    if sp_host_url.nil?
+      raise "SharePoint Host Url is empty"
     end
-    sp_connection = new SPConnection sp_apptoken, sp_host_url
-    return new SPWeb sp_connection
+    connectionargs = {:sp_apptoken => sp_apptoken, :sp_host_url => sp_host_url}
+    sp_connection = SPConnection.new connectionargs
+
+    return SPWeb.new sp_connection
   end
 
   def self.connect_to_search(sp_apptoken, sp_host_url)
     if sp_apptoken.nil? or sp_host_url.nil?
       raise "parameter is empty"
     end
-    sp_connection = new SPConnection sp_apptoken, sp_host_url
+    connectionargs = {:sp_apptoken => sp_apptoken, :sp_host_url => sp_host_url}
+    sp_connection = SPConnection.new connectionargs
 
   end
 end
