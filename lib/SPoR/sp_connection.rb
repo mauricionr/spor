@@ -3,6 +3,8 @@ require "rest-client"
 require "uri"
 require "httpi"
 
+require_relative "configuration/config"
+
 module SPoR
   class SPConnection
     def initialize(args)
@@ -12,7 +14,7 @@ module SPoR
 
       unless sp_apptoken.nil?
         @sp_online_modus = true
-        @app_secret = get_app_secret
+        @app_secret = Config::appsecret
         decoded_apptoken = JWT.decode sp_apptoken, @app_secret, false
         @app_context = {:context => decoded_apptoken['appctx'],
                         :sender => decoded_apptoken['appctxsender'],
@@ -58,10 +60,6 @@ module SPoR
 
 
     private
-    def get_app_secret
-      return "Fv3AIeiQ2HTNecWK0SMANWh1KF2YfdYZdpHRLF1psoo="
-    end
-
     def get_access_token
       post_data = {
           'grant_type' => 'refresh_token',
