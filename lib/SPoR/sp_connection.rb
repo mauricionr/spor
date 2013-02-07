@@ -38,12 +38,14 @@ module SPoR
 
       url = @sp_host_url + '/_api/' + request
       response = nil
+      headers = {:accept => "application/json;odata=verbose"}
       case method
         when :post
           #response = RestClient.post url, post_data, @connection_data[:access_token]
         when :get
           if @sp_online_modus
-            response = RestClient.get url, @connection_data[:access_token][:authorization]
+            headers.merge! @connection_data[:access_token][:authorization]
+            response = RestClient.get url, headers
           else
             ntlm_request = HTTPI::Request.new
             ntlm_request.url = url
@@ -55,7 +57,7 @@ module SPoR
         else
           raise 'not supported method'
       end
-      response
+      JSON.parse response
     end
 
 
