@@ -1,5 +1,6 @@
 require_relative "sp_connection"
-require "nokogiri"
+require_relative "sp_list"
+
 module SPoR
   class SPWeb
 
@@ -10,11 +11,18 @@ module SPoR
     def title
       request = 'web/title'
       response = @sp_connection.send_request :get, request
-      Nokogiri.XML(response).xpath('//d:Title').first.text
+      response['d']['Title']
     end
 
     def lists
-      "SPLists"
+      request = "lists"
+      response = @sp_connection.send_request :get, request
+      lists = []
+      response['d']['results'].each do |result|
+        #create new sp_list items
+        lists << (SPList.new result)
+      end
+      lists
     end
 
   end
