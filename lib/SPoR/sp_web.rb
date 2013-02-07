@@ -19,7 +19,6 @@ module SPoR
       response = @sp_connection.send_request :get, request
       lists = []
       response['d']['results'].each do |result|
-        #create new sp_list items
         lists << (SPList.new result)
       end
       lists
