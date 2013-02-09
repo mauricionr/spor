@@ -1,15 +1,17 @@
-require "jwt"
-require "rest-client"
-require "uri"
-require "httpi"
+require 'jwt'
+require 'rest-client'
+require 'uri'
+require 'httpi'
+require 'singleton'
 
-require_relative "configuration/config"
+require_relative 'configuration/config'
 
 module SPoR
   class SPConnection
-    def initialize(args)
-      @sp_host_url = args[:sp_host_url]
-      sp_apptoken = args[:sp_apptoken]
+    include Singleton
+
+    def setup_connection(sp_apptoken = nil, sp_host_url)
+      @sp_host_url = sp_host_url
       @sp_online_modus = false
 
       unless sp_apptoken.nil?
@@ -28,15 +30,13 @@ module SPoR
         }
         @connection_data[:access_token] = get_access_token
       end
-
     end
 
-    def send_request(method, request, post_data = nil)
-      if method.nil? or request.nil?
+    def send_request(method, url, post_data = nil)
+      if method.nil? or url.nil?
         raise 'parameter is nil'
       end
 
-      url = @sp_host_url + '/_api/' + request
       response = nil
       headers = {:accept => "application/json;odata=verbose"}
       case method
@@ -58,6 +58,11 @@ module SPoR
           raise 'not supported method'
       end
       JSON.parse response
+    end
+
+    def send_request_by_resource(method, resource, post_data = nil)
+      url = @sp_host_url + '/_api/' + resource
+      send_request method, url, post_data
     end
 
 
