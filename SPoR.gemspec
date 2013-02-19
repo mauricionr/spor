@@ -6,8 +6,8 @@ require 'spor/version'
 Gem::Specification.new do |gem|
   gem.name = 'spor'
   gem.version = SPoR::VERSION
-  gem.authors = %w(mgoldbach)
-  gem.email = %w(mgoldbach@agile-is.de)
+  gem.authors = 'Markus Goldbach'
+  gem.email = 'mgoldbach@agile-is.de'
   gem.description = 'Common interface to create SharePoint 2013 Apps with Ruby on Rails'
   gem.summary = 'SPoR - SharePoint on Rails. Create SharePoint 2013 Apps with Ruby on Rails'
   gem.homepage = 'http://www.agile-is.de'
@@ -18,11 +18,11 @@ Gem::Specification.new do |gem|
   gem.require_paths = ['lib']
 
   #Dependencies
-  gem.add_dependency 'jwt'
-  gem.add_dependency 'rest-client'
-  gem.add_dependency 'httpi'
+  gem.add_dependency 'jwt', '~> 0.1.5'
+  gem.add_dependency 'rest-client', '~> 1.6.7'
+  gem.add_dependency 'httpi', '~> 2.0.2'
 
   #Development dependencies
-  gem.add_development_dependency 'rspec'
-  gem.add_development_dependency 'rake'
+  gem.add_development_dependency 'rspec', '~> 2.12.0'
+  gem.add_development_dependency 'rake', '~> 10.0.3'
 end
