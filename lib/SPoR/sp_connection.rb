@@ -38,13 +38,16 @@ module SPoR
       end
 
       response = nil
-      headers = {:accept => "application/json;odata=verbose"}
+      headers = {:accept => 'application/json;odata=verbose'}
+      headers.merge! @connection_data[:access_token][:authorization]
       case method
         when :post
-          #response = RestClient.post url, post_data, @connection_data[:access_token]
+          formdigest = get_formdigest
+          headers.merge!({'X-RequestDigest' => formdigest})
+          headers.merge!({:content_type => 'application/json;odata=verbose'})
+          response = RestClient.post url, post_data, headers
         when :get
           if @sp_online_modus
-            headers.merge! @connection_data[:access_token][:authorization]
             response = RestClient.get url, headers
           else
             ntlm_request = HTTPI::Request.new
@@ -69,21 +72,29 @@ module SPoR
     private
     def get_access_token
       post_data = {
-          'grant_type' => 'refresh_token',
-          'client_id' => @connection_data[:aud],
-          'client_secret' => @app_secret,
-          'refresh_token' => @connection_data[:refresh_token],
-          'resource' => @app_context[:server_type] + '/' + URI(@sp_host_url).host + '@' + @app_context[:server_id]
+          :grant_type => 'refresh_token',
+          :client_id => @connection_data[:aud],
+          :client_secret => @app_secret,
+          :refresh_token => @connection_data[:refresh_token],
+          :resource => @app_context[:server_type] + '/' + URI(@sp_host_url).host + '@' + @app_context[:server_id]
       }
 
       result = RestClient.post @connection_data[:acs_server], post_data
 
       json_result = JSON.parse(result)
       auth_token = {:token_type => json_result['token_type'], :access_token => json_result['access_token']}
-      auth_token[:authorization] = {'Authorization' => auth_token[:token_type] + ' ' + auth_token[:access_token]}
+      auth_token[:authorization] = {:Authorization => auth_token[:token_type] + ' ' + auth_token[:access_token]}
 
       auth_token
 
+    end
+
+    def get_formdigest
+      header = {:accept => 'application/json;odata=verbose'}
+      header.merge! @connection_data[:access_token][:authorization]
+      contextinfo = RestClient.post @sp_host_url + '/_api/contextinfo', '', header
+      json_contextinfo = JSON.parse contextinfo
+      json_contextinfo['d']['GetContextWebInformation']['FormDigestValue']
     end
 
   end
