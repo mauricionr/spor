@@ -1,24 +1,18 @@
 # SPoR
 
-TODO: Write a gem description
+Common interface to create SharePoint 2013 Apps with Ruby on Rails
 
 ## Installation
 
-Add this line to your application's Gemfile:
+At the moment you must install the gem manually.
 
-    gem 'spor'
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install spor
+    $ git clone https://github.com/goldi42/spor.git
+    $ rake install
 
 ## Usage
 
-TODO: Write usage instructions here
+The gem works now only on SharePoint Online (Office 365 Preview), but on premise support will following soon.
+
 
 ## Contributing
 
