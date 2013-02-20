@@ -45,15 +45,20 @@ module SPoR
           formdigest = get_formdigest
           headers.merge!({'X-RequestDigest' => formdigest})
           headers.merge!({:content_type => 'application/json;odata=verbose'})
-          response = RestClient.post url, post_data, headers
+          if @sp_online_modus
+            response = RestClient.post url, post_data, headers
+          else
+            raise 'not implemented yet'
+          end
         when :get
           if @sp_online_modus
             response = RestClient.get url, headers
           else
-            ntlm_request = HTTPI::Request.new
-            ntlm_request.url = url
-            ntlm_request.auth.ntlm(user, pass)
-            response = HTTPI.get ntlm_request
+            #ntlm_request = HTTPI::Request.new
+            #ntlm_request.url = url
+            #ntlm_request.auth.ntlm(user, pass)
+            #response = HTTPI.get ntlm_request
+            raise 'not implemented yet'
           end
         when :delete
           "get"

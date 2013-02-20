@@ -19,6 +19,6 @@ module SPoR
       raise 'parameter is empty'
     end
     SPConnection.instance.setup_connection sp_apptoken, sp_host_url
-
+    raise 'not implemented yet'
   end
 end
