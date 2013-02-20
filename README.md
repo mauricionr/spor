@@ -11,7 +11,7 @@ At the moment you must install the gem manually.
 
 ## Usage
 
-The gem works now only on SharePoint Online (Office 365 Preview), but on premise support will following soon.
+The gem works now only on SharePoint Online (Office 365 Preview), but On-Premise support will following soon.
 
 
 ## Contributing
