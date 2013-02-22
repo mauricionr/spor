@@ -1,7 +1,7 @@
-require 'SPoR/version'
-require_relative 'SPoR/sp_connection'
-require_relative 'SPoR/sp_web'
-require_relative 'SPoR/sp_search'
+require 'spor/version'
+require_relative 'spor/sp_connection'
+require_relative 'spor/sp_web'
+require_relative 'spor/sp_search'
 
 module SPoR
   extend self
